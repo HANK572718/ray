@@ -1,87 +1,29 @@
 [project]
-requires-python = ">=3.9"
-
-[tool.ruff]
-line-length = 88
-extend-exclude = [
-    "python/ray/thirdparty_files/",
-    "python/ray/_private/thirdparty/",
-    "python/ray/_private/runtime_env/agent/thirdparty_files/",
-    "python/build/",
-    "python/ray/workflow/tests/mock_server.py",
-    "python/ray/serve/tests/test_config_files/syntax_error.py",
-    "rllib/examples/envs/classes/multi_agent/footsies/game/proto/footsies_service_pb2.py",
-    "rllib/examples/envs/classes/multi_agent/footsies/game/proto/footsies_service_pb2_grpc.py",
+name = "ray-learning"
+version = "0.1.0"
+description = "Learning Ray distributed computing framework"
+authors = [{ name = "Hank", email = "Engalpha@node-health.com" }]
+requires-python = ">=3.11"
+dependencies = [
+    "ray[default] (>=2.51.1,<3.0.0)",
+    "ipykernel (>=7.1.0,<8.0.0)",
+    "numpy (>=2.3.4,<3.0.0)",
+    "filelock (>=3.20.0,<4.0.0)",
+    "ipywidgets (>=8.1.8,<9.0.0)"
 ]
 
-[tool.ruff.lint]
-extend-select = ["I", "B", "Q", "C4", "W"]
-ignore = [
-    "B003",
-    "B005",
-    "B007",
-    "B008",
-    "B011",
-    "B012",
-    "B015",
-    "B017",
-    "B028",
-    "C408",
-    "C417",
-    "E741",
-    # TODO(MortalHappiness): Remove the following rules from the ignore list
-    # The above are rules ignored originally in flake8
-    # The following are rules ignored in ruff
-    "B023",
-    "B024",
-    "B026",
-    "B027",
-    "B904",
-    "C419",
-    # Below are auto-fixable rules
-    "I001",
-]
+[tool.package]
+package-mode = false
 
-[tool.ruff.lint.flake8-quotes]
-avoid-escape = false
+[tool.poetry.group.windows.dependencies]
+# Windows 專用依賴
+torch = { url = "https://download.pytorch.org/whl/cu124/torch-2.4.0%2Bcu124-cp311-cp311-win_amd64.whl#sha256=b1d40a13a6fd3f92aa5728ab84756571381b6b1ccae7ce62037c28d539687c25" }
+torchaudio = { url = "https://download.pytorch.org/whl/cu124/torchaudio-2.4.0%2Bcu124-cp311-cp311-win_amd64.whl#sha256=12f7f2b1c0fb435875175247083c8aca056face6bc5388b9a494a90ca197632c" }
+torchvision = { url = "https://download.pytorch.org/whl/cu124/torchvision-0.19.0%2Bcu124-cp311-cp311-win_amd64.whl#sha256=42ac55c0fd1cdea14c20168f0b24eba7fc2d2eb4ef75196ded7b76f81dee619f" }
+# PyQt5 = { url = "https://files.pythonhosted.org/packages/ca/ac/596e8ca16fd0634542d874c0d79219fc527ea7de73a5000092f60ecbf6e9/PyQt5-5.15.10-cp37-abi3-win_amd64.whl" }
+# PyQt5-Qt5 = { url = "https://files.pythonhosted.org/packages/py3/P/PyQt5_Qt5/PyQt5_Qt5-5.15.2-py3-none-win_amd64.whl" }
 
-[tool.ruff.lint.isort]
-combine-as-imports = true
-section-order = ["future", "standard-library", "third-party", "first-party", "local-folder", "afterray"]
-known-local-folder = ["ray"]
-known-third-party = ["grpc"]
 
-[tool.ruff.lint.isort.sections]
-afterray = ["psutil", "setproctitle"]
-
-# Some of the directories need to be kept in the blacklist for isort ("I" rule):
-# python/ray/cloudpickle/*
-# doc/*
-# python/ray/__init__.py
-# For the rest we will gradually remove them from the blacklist as we
-# reformat the code to follow the style guide.
-[tool.ruff.lint.per-file-ignores]
-"doc/*" = ["I"]
-"python/ray/__init__.py" = ["I"]
-"python/ray/dag/__init__.py" = ["I"]
-"python/ray/air/__init__.py" = ["I"]
-# "rllib/__init__.py" = ["I"]
-# "rllib/benchmarks/*" = ["I"]
-# "rllib/connectors/*" = ["I"]
-# "rllib/evaluation/*" = ["I"]
-# "rllib/models/*" = ["I"]
-"rllib/utils/*" = ["I"]
-"rllib/algorithms/*" = ["I"]
-# "rllib/core/*" = ["I"]
-# "rllib/examples/*" = ["I"]
-# "rllib/offline/*" = ["I"]
-# "rllib/tests/*" = ["I"]
-# "rllib/callbacks/*" = ["I"]
-# "rllib/env/*" = ["I"]
-# "rllib/execution/*" = ["I"]
-# "rllib/policy/*" = ["I"]
-# "rllib/tuned_examples/*" = ["I"]
-"release/*" = ["I"]
-
-# TODO(matthewdeng): Remove this line
-"python/ray/tune/__init__.py" = ["I"]
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
